@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import './SpaceVisualization.css';
-import sunTexture from '../../images/earth.jpg';
+import sunTexture from '../../images/sun.jpg';
 import mercuryTexture from '../../images/mercury.jpg';
 import venusTexture from '../../images/venus.jpg';
 import earthTexture from '../../images/earth.jpg';
