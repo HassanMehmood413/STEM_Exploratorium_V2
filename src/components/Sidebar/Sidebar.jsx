@@ -5,15 +5,15 @@ import { faRocket, faImage, faSatellite } from '@fortawesome/free-solid-svg-icon
 import { generateAIResponse } from '../../services/aiServices';
 import '../Sidebar/Sidebar.css';
 
-function Sidebar({ 
-  topic, 
-  setTopic, 
-  activityType, 
-  setActivityType, 
+function Sidebar({
+  topic,
+  setTopic,
+  activityType,
+  setActivityType,
   setGeneratedContent,
   setUploadedImage,
   nasaApiKey,
-  setNasaApiKey 
+  setNasaApiKey
 }) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -31,18 +31,15 @@ function Sidebar({
     try {
       let prompt = '';
       if (activityType === "DIY Project") {
-        prompt = `Generate ${projectCount} DIY project ideas for the STEM topic: ${topic}. 
-                 Format the response with numbered points and include materials needed and steps.`;
+        prompt = `Generate ${projectCount} DIY project ideas for the STEM topic: ${topic}. Format the response with numbered points and include materials needed and steps.`.trim();
       } else if (activityType === "Virtual Field Trip") {
-        prompt = `Suggest virtual field trip ideas related to the STEM topic: ${topic}. 
-                 Include websites, virtual tours, and interactive resources.`;
+        prompt = `Suggest virtual field trip ideas related to the STEM topic: ${topic}. Include websites, virtual tours, and interactive resources.`.trim();
       } else {
-        prompt = `Create a detailed STEM challenge for the topic: ${topic}. 
-                 Include objectives, materials needed, and step-by-step instructions.`;
+        prompt = `Create a detailed STEM challenge for the topic: ${topic}. Include objectives, materials needed, and step-by-step instructions.`.trim();
       }
 
       const response = await generateAIResponse(prompt);
-      
+
       if (response.includes('Error:')) {
         setError(response);
       } else {
@@ -73,7 +70,7 @@ function Sidebar({
         <FontAwesomeIcon icon={faRocket} className="sidebar-icon" />
         Explore STEM Topics
       </h4>
-      
+
       {error && (
         <Alert variant="danger" className="mb-3">
           {error}
@@ -83,7 +80,7 @@ function Sidebar({
       <Form className="sidebar-form">
         <Form.Group className="mb-3">
           <Form.Label>Activity Type</Form.Label>
-          <Form.Select 
+          <Form.Select
             value={activityType}
             onChange={(e) => setActivityType(e.target.value)}
             className="custom-select"
@@ -156,8 +153,8 @@ function Sidebar({
           />
         </Form.Group>
 
-        <Button 
-          variant="primary" 
+        <Button
+          variant="primary"
           onClick={handleGenerate}
           className="generate-btn"
           disabled={isLoading || !topic}
