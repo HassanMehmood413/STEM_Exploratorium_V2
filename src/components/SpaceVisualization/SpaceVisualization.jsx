@@ -376,7 +376,7 @@ const SpaceVisualization = () => {
                     <li>Left Click + Drag to Rotate</li>
                     <li>Right Click + Drag to Pan</li>
                     <li>Scroll to Zoom</li>
-                    <li>Click on any planet for information</li>
+                    <li>Zoom to any plannet and click on it for more information</li>
                 </ul>
             </div>
         </div>
