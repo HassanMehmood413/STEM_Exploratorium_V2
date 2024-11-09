@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import BackgroundAnimation from '../BackgroundAnimation/BackgroundAnimation';
@@ -7,6 +7,7 @@ import './LandingPage.css';
 const LandingPage = () => {
   const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState({});
+  const heroSectionRef = useRef(null); // Reference for the hero section
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -27,6 +28,11 @@ const LandingPage = () => {
 
     return () => observer.disconnect();
   }, []);
+
+  // Function to scroll to hero section
+  const scrollToHeroSection = () => {
+    heroSectionRef.current.scrollIntoView({ behavior: 'smooth' });
+  };
 
   const categories = [
     {
@@ -91,7 +97,7 @@ const LandingPage = () => {
       <BackgroundAnimation />
       
       {/* Hero Section */}
-      <section id="hero" className={`hero-section ${isVisible['hero'] ? 'visible' : ''}`}>
+      <section id="hero" ref={heroSectionRef} className={`hero-section ${isVisible['hero'] ? 'visible' : ''}`}>
         <Container>
           <Row className="align-items-center">
             <Col md={6} className="hero-content">
@@ -102,7 +108,7 @@ const LandingPage = () => {
               <p className="hero-subtitle">
                 Explore, Learn, and Innovate with our interactive STEM education platform
               </p>
-              <button className="cta-button" onClick={() => navigate('/engineering')}>
+              <button className="cta-button" onClick={scrollToHeroSection}>
                 Start Learning
               </button>
             </Col>
@@ -122,7 +128,7 @@ const LandingPage = () => {
       </section>
 
       {/* Categories Section */}
-      <section id="categories" className={`categories-section ${isVisible['categories'] ? 'visible' : ''}`}>
+      <section id="categories" ref={heroSectionRef} className={`categories-section ${isVisible['categories'] ? 'visible' : ''}`}>
         <Container>
           <h2 className="section-title">Choose Your Path</h2>
           <div className="categories-grid">
@@ -201,7 +207,7 @@ const LandingPage = () => {
           <div className="cta-content">
             <h2>Ready to Start Your STEM Journey?</h2>
             <p>Join thousands of learners exploring the fascinating world of STEM</p>
-            <button className="cta-button" onClick={() => navigate('/engineering')}>
+            <button className="cta-button" onClick={scrollToHeroSection}>
               Get Started Now
             </button>
           </div>
