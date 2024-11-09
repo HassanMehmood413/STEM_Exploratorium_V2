@@ -1,0 +1,141 @@
+.technology-page {
+    min-height: 100vh;
+    background: #121212;
+    color: white;
+  }
+  
+  .tech-hero {
+    height: 50vh;
+    min-height: 400px;
+    background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 2rem 0;
+  }
+  
+  .tech-hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+  }
+  
+  .tech-title {
+    font-size: 3.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .tech-subtitle {
+    font-size: 1.5rem;
+    color: #ccc;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .tech-categories {
+    margin-top: -50px;
+    position: relative;
+    z-index: 2;
+  }
+  
+  .tech-card {
+    background: #1e1e1e;
+    border-radius: 15px;
+    overflow: hidden;
+    text-decoration: none;
+    color: white;
+    display: block;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .tech-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    color: white;
+  }
+  
+  .tech-card-image {
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+  }
+  
+  .tech-card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s ease;
+  }
+  
+  .tech-card:hover .tech-card-overlay {
+    opacity: 0.9;
+  }
+  
+  .tech-card-icon {
+    font-size: 3rem;
+  }
+  
+  .tech-card-content {
+    padding: 1.5rem;
+  }
+  
+  .tech-card-content h3 {
+    margin-bottom: 0.5rem;
+  }
+  
+  .tech-card-content p {
+    color: #ccc;
+    margin: 0;
+  }
+  
+  .tech-features {
+    padding: 100px 0;
+    background: #1a1a1a;
+    margin-top: 100px;
+  }
+  
+  .tech-feature-item {
+    text-align: center;
+    padding: 2rem;
+    background: #242424;
+    border-radius: 15px;
+    transition: transform 0.3s ease;
+  }
+  
+  .tech-feature-item:hover {
+    transform: translateY(-5px);
+  }
+  
+  .tech-feature-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+  
+  @media (max-width: 768px) {
+    .tech-title {
+      font-size: 2.5rem;
+    }
+  
+    .tech-subtitle {
+      font-size: 1.2rem;
+    }
+  
+    .tech-hero {
+      height: 40vh;
+      min-height: 300px;
+    }
+  }

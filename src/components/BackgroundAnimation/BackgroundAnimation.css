@@ -1,0 +1,387 @@
+/* Base Styles */
+:root {
+  --primary-glow: rgba(0, 206, 201, 0.8);
+  --secondary-glow: rgba(9, 132, 227, 0.8);
+  --accent-glow: rgba(108, 92, 231, 0.8);
+  --star-color: rgba(255, 255, 255, 0.8);
+}
+
+.background-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+}
+
+/* Gradient Background */
+.gradient-bg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 0% 0%, rgba(0, 206, 201, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 100% 100%, rgba(9, 132, 227, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(108, 92, 231, 0.1) 0%, transparent 50%),
+    linear-gradient(45deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0) 100%);
+  animation: gradientMove 15s ease infinite alternate;
+  backdrop-filter: blur(100px);
+}
+
+/* Nebula Effect */
+.nebula {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 30% 50%, rgba(147, 112, 219, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 70% 50%, rgba(65, 105, 225, 0.1) 0%, transparent 50%);
+  filter: blur(30px);
+  animation: nebulaFloat 20s ease infinite;
+  mix-blend-mode: screen;
+}
+
+/* Particles */
+.particles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: var(--primary-glow);
+  border-radius: 50%;
+  box-shadow: 
+    0 0 15px var(--primary-glow),
+    0 0 30px var(--primary-glow),
+    0 0 45px var(--primary-glow);
+  animation: floatParticle 20s linear infinite;
+}
+
+/* Particle Positions */
+.particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+.particle:nth-child(2) { left: 20%; animation-delay: 2s; }
+.particle:nth-child(3) { left: 30%; animation-delay: 4s; }
+.particle:nth-child(4) { left: 40%; animation-delay: 6s; }
+.particle:nth-child(5) { left: 50%; animation-delay: 8s; }
+.particle:nth-child(6) { left: 60%; animation-delay: 10s; }
+.particle:nth-child(7) { left: 70%; animation-delay: 12s; }
+.particle:nth-child(8) { left: 80%; animation-delay: 14s; }
+.particle:nth-child(9) { left: 90%; animation-delay: 16s; }
+.particle:nth-child(10) { left: 95%; animation-delay: 18s; }
+
+/* Shooting Stars */
+.shooting-stars {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.shooting-star {
+  position: absolute;
+  height: 2px;
+  background: linear-gradient(90deg, 
+    var(--star-color), 
+    transparent
+  );
+  box-shadow: 
+    0 0 15px var(--star-color),
+    0 0 30px var(--star-color);
+  animation: shootingStar 3s ease-in infinite;
+}
+
+.shooting-star:nth-child(1) { 
+  width: 100px; 
+  top: 10%; 
+  left: -10%;
+  animation-delay: 0s; 
+  transform: rotate(-45deg);
+}
+
+.shooting-star:nth-child(2) { 
+  width: 150px; 
+  top: 30%; 
+  left: -15%;
+  animation-delay: 1s; 
+  transform: rotate(-45deg);
+}
+
+.shooting-star:nth-child(3) { 
+  width: 80px; 
+  top: 50%; 
+  left: -8%;
+  animation-delay: 1.5s; 
+  transform: rotate(-45deg);
+}
+
+/* Orbs */
+.orbs {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.orb {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.3;
+  mix-blend-mode: screen;
+}
+
+.orb-1 {
+  background: radial-gradient(circle at center, 
+    var(--primary-glow) 0%, 
+    transparent 70%
+  );
+  top: -150px;
+  left: -150px;
+  animation: orbFloat 20s ease infinite;
+}
+
+.orb-2 {
+  background: radial-gradient(circle at center, 
+    var(--secondary-glow) 0%, 
+    transparent 70%
+  );
+  bottom: -150px;
+  right: -150px;
+  animation: orbFloat 25s ease infinite reverse;
+}
+
+/* Waves */
+.waves {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  pointer-events: none;
+}
+
+.wave {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(0, 206, 201, 0.05)
+  );
+  animation: waveMove 10s ease-in-out infinite;
+}
+
+.wave-2 {
+  animation-delay: -2s;
+  opacity: 0.3;
+}
+
+.wave-3 {
+  animation-delay: -4s;
+  opacity: 0.2;
+}
+
+/* Floating Elements */
+.floating-elements {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.float-element {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  animation: floatElement 15s ease-in-out infinite;
+}
+
+.float-element:nth-child(1) { left: 20%; top: 20%; animation-delay: 0s; }
+.float-element:nth-child(2) { left: 40%; top: 40%; animation-delay: -3s; }
+.float-element:nth-child(3) { left: 60%; top: 60%; animation-delay: -6s; }
+.float-element:nth-child(4) { left: 80%; top: 30%; animation-delay: -9s; }
+.float-element:nth-child(5) { left: 30%; top: 70%; animation-delay: -12s; }
+
+/* Vignette Effect */
+.vignette {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle at center,
+    transparent 0%,
+    rgba(0, 0, 0, 0.3) 100%
+  );
+  pointer-events: none;
+}
+
+/* Animations */
+@keyframes gradientMove {
+  0% {
+    transform: scale(1) rotate(0deg);
+    filter: hue-rotate(0deg);
+  }
+  50% {
+    transform: scale(1.2) rotate(5deg);
+    filter: hue-rotate(180deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    filter: hue-rotate(360deg);
+  }
+}
+
+@keyframes nebulaFloat {
+  0% { 
+    transform: scale(1) rotate(0deg); 
+    opacity: 0.5; 
+  }
+  50% { 
+    transform: scale(1.2) rotate(180deg); 
+    opacity: 0.7; 
+  }
+  100% { 
+    transform: scale(1) rotate(360deg); 
+    opacity: 0.5; 
+  }
+}
+
+@keyframes floatParticle {
+  0% {
+    transform: translateY(100vh) scale(0) rotate(0deg);
+    opacity: 0;
+  }
+  50% {
+    transform: translateY(50vh) scale(1) rotate(180deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px) scale(0) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes shootingStar {
+  0% {
+    transform: translateX(-100%) translateY(0) rotate(-45deg);
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(200%) translateY(200%) rotate(-45deg);
+    opacity: 0;
+  }
+}
+
+@keyframes orbFloat {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.3;
+  }
+  33% {
+    transform: translate(100px, 100px) scale(1.2);
+    opacity: 0.4;
+  }
+  66% {
+    transform: translate(-50px, 150px) scale(0.8);
+    opacity: 0.3;
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.3;
+  }
+}
+
+@keyframes waveMove {
+  0% {
+    transform: translateY(0) scaleY(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateY(-20px) scaleY(1.2);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(0) scaleY(1);
+    opacity: 0.5;
+  }
+}
+
+@keyframes floatElement {
+  0% {
+    transform: translate(0, 0) scale(1) rotate(0deg);
+    opacity: 0.3;
+  }
+  25% {
+    transform: translate(20px, -20px) scale(1.2) rotate(90deg);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translate(-20px, 20px) scale(0.8) rotate(180deg);
+    opacity: 0.3;
+  }
+  75% {
+    transform: translate(-10px, -10px) scale(1.1) rotate(270deg);
+    opacity: 0.4;
+  }
+  100% {
+    transform: translate(0, 0) scale(1) rotate(360deg);
+    opacity: 0.3;
+  }
+}
+
+/* Media Queries for Performance */
+@media (max-width: 768px) {
+  .particle {
+    display: none;
+  }
+  
+  .shooting-star {
+    display: none;
+  }
+  
+  .float-element {
+    display: none;
+  }
+  
+  .wave {
+    height: 50px;
+  }
+  
+  .orb {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+/* Reduce Motion */
+@media (prefers-reduced-motion: reduce) {
+  .gradient-bg,
+  .nebula,
+  .particle,
+  .shooting-star,
+  .orb,
+  .wave,
+  .float-element {
+    animation: none;
+    transition: none;
+  }
+}

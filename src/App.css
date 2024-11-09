@@ -1,0 +1,246 @@
+:root {
+  /* Colors */
+  --primary-dark: #1a1a2e;
+  --primary-color: #16213e;
+  --secondary-color: #0f3460;
+  --accent-color: #e94560;
+  
+  /* UI Colors */
+  --background-dark: #0d1117;
+  --background-light: #161b22;
+  --card-bg: #21262d;
+  --text-primary: #ffffff;
+  --text-secondary: #8b949e;
+  --text-accent: #58a6ff;
+  
+  /* Status Colors */
+  --success-color: #238636;
+  --warning-color: #9e6a03;
+  --error-color: #f85149;
+  
+  /* Shadows */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.4);
+  
+  /* Transitions */
+  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: var(--background-dark);
+  color: var(--text-primary);
+}
+
+.App {
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.main-container {
+  position: relative;
+  z-index: 2;
+  padding: 2rem;
+  margin-top: 2rem;
+}
+
+/* Glass Effect for Cards */
+.card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  color: white;
+  padding: 1.5rem;
+  transition: all var(--transition-normal);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Form Controls */
+.form-control {
+  background: #dcdcdc;
+  border: 1px solid rgba(218, 218, 218, 0.1);
+  color: var(--text-primary);
+  transition: all var(--transition-normal);
+}
+
+.form-control:focus {
+  background: #b2b4b7;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 2px rgba(224, 58, 86, 0.2);
+}
+
+/* Buttons */
+.btn {
+  padding: 0.5rem 1.5rem;
+  border-radius: 8px;
+  transition: all var(--transition-normal);
+}
+
+.btn-primary {
+  background: var(--accent-color);
+  border: none;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(233, 69, 96, 0.3);
+}
+
+/* Loading Spinner */
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 3px solid var(--background-light);
+  border-top-color: var(--accent-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .main-container {
+    padding: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .card {
+    margin-bottom: 1rem;
+  }
+}
+.app-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #121212;
+  color: white;
+}
+
+.main-content {
+  flex: 1;
+  margin-top: 80px;
+  padding-bottom: 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.page-content {
+  min-height: calc(100vh - 80px);
+  padding: 2rem 0;
+  position: relative;
+}
+
+.text-gradient {
+  background: linear-gradient(45deg, #4CAF50, #2196F3, #FF5722, #9C27B0);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientFlow 8s linear infinite;
+}
+
+.coming-soon-badge {
+  display: inline-block;
+  padding: 0.5rem 1.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50px;
+  backdrop-filter: blur(10px);
+  margin-top: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  animation: pulse 2s infinite;
+}
+
+.coming-soon-badge span {
+  background: linear-gradient(45deg, #4CAF50, #2196F3);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
+}
+
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.main-container {
+  position: relative;
+  z-index: 2;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .main-content {
+    margin-top: 120px;
+  }
+  
+  .page-content {
+    padding: 1rem;
+  }
+}
+
+/* Add Font Awesome for social icons */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css');
+
+/* Technology Section Styles */
+.page-content {
+  min-height: calc(100vh - 60px); /* Adjust based on your navbar height */
+  padding-top: 60px; /* Adjust based on your navbar height */
+}
+
+.text-gradient {
+  background: linear-gradient(45deg, #4CAF50, #2196F3);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.coming-soon-badge {
+  display: inline-block;
+  padding: 0.5rem 1.5rem;
+  background: linear-gradient(45deg, #FF5722, #9C27B0);
+  border-radius: 25px;
+  margin-top: 2rem;
+}
+
+.coming-soon-badge span {
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Add smooth transitions */
+.main-content {
+  transition: all 0.3s ease;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .page-content {
+    padding-top: 50px;
+  }
+}
