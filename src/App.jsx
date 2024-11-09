@@ -60,8 +60,8 @@ const SciencePage = () => (
   <div className="science-page page-content">
     <BackgroundAnimation />
     <Container className="text-center py-5">
-      <h1 className="display-4 mb-4 text-gradient">Science Explorer</h1>
-      <p className="lead">Discover the wonders of scientific exploration...</p>
+      <h1 className="display-4 mb-4 text-gradient">Engineering Exploreration</h1>
+      <p className="lead">Discover the wonders of Engineering exploration...</p>
       <div className="coming-soon-badge">
         <span>Coming Soon</span>
       </div>
@@ -139,8 +139,8 @@ function App() {
         <main className="main-content">
           <Routes>
             <Route path="/" element={<LandingPage />} />
-            <Route path="/engineering" element={<EngineeringApp />} />
-            <Route path="/science" element={<SciencePage />} />
+            <Route path="/engineering" element={<SciencePage />} />
+            <Route path="/science" element={<EngineeringApp />} />
             <Route path="/technology" element={<TechnologyPage />} />
             <Route path="/technology/space" element={<SpaceVisualization />} />
             <Route path="/technology/robotics" element={<RoboticsPage />} />
