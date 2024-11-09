@@ -2,6 +2,22 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Link to the Website
+
+[Link](https://stemai-psi.vercel.app/)
+
+## Project Description
+
+STEM Exploratorium is an interactive learning platform designed to introduce kids to the exciting fields of Science, Technology, Engineering, and Mathematics (STEM). Many kids aspire to pursue careers in these areas but struggle to find beginner-friendly resources all in one place. With STEM Exploratorium, young learners can explore essential STEM concepts through engaging and hands-on activities that make learning fun, accessible, and inspiring.
+
+## Features
+
+1. Hands-On Activities
+2. Experiment ideas
+3. Quizzes
+4. Engaging Visuals and Animations
+5. Interactive solar system
+
 ## Available Scripts
 
 In the project directory, you can run:
