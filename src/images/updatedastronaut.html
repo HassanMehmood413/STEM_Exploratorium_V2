@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Universe Simulation</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      background-color: black;
+    }
+    .space {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      background-color: black;
+      perspective: 1000px; /* Add perspective for 3D effect */
+    }
+    img {
+      position: absolute;
+      border-radius: 50%;
+    }
+    /* Astronaut */
+    .astronaut {
+      position: absolute;
+      right: 120px; /* Keep astronaut a bit to the left */
+      top: 30%; /* Move astronaut higher */
+      transform: translateY(-50%); /* Remove rotation */
+      width: 300px; /* Increased size */
+      height: 300px; /* Increased size */
+      background-image: url('character.png'); /* Relative path to your astronaut image */
+      background-size: cover;
+      background-position: center; /* Center the image */
+      z-index: 1;
+      box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6); /* Soft shadow for depth */
+    }
+    /* Sparkling Stars */
+    .star {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background-color: white;
+      border-radius: 50%;
+      opacity: 0;
+      animation: sparkle 1.5s infinite alternate ease-in-out;
+    }
+    /* Keyframe for sparkling effect */
+    @keyframes sparkle {
+      0% { opacity: 0.3; transform: scale(0.8); }
+      50% { opacity: 1; transform: scale(1.2); }
+      100% { opacity: 0.3; transform: scale(0.8); }
+    }
+  </style>
+</head>
+<body>
+  <div class="space" id="space">
+    <div class="astronaut"></div>
+  </div>
+
+  <script>
+    class CelestialBody {
+      constructor(name, size, distance, imgSrc) {
+        this.name = name;
+        this.size = size;
+        this.distance = distance;
+        this.angle = 0;
+        this.img = document.createElement('img');
+        this.img.src = imgSrc;
+        this.img.style.width = `${size}px`;
+        this.img.style.height = `${size}px`;
+        document.getElementById('space').appendChild(this.img);
+      }
+      
+      updatePosition(centerX, centerY, speed) {
+        this.angle += speed;
+        this.img.style.left = `${centerX + Math.cos(this.angle) * this.distance - this.size / 2}px`;
+        this.img.style.top = `${centerY + Math.sin(this.angle) * this.distance - this.size / 2}px`;
+      }
+    }
+
+    class Universe {
+      constructor() {
+        this.space = document.getElementById('space');
+        this.centerX = this.space.clientWidth / 2;
+        this.centerY = this.space.clientHeight / 2;
+        this.planets = [];
+        this.stars = [];
+        this.initializeBodies();
+        this.generateStars(100);  // Generate 100 sparkling stars
+        this.animate();
+      }
+
+      initializeBodies() {
+        this.sun = new CelestialBody('Sun', 350, 0, 'estrela_sun.gif');
+        this.planets.push(new CelestialBody('Mercury', 25, 150, 'mercurio.gif'));
+        this.planets.push(new CelestialBody('Venus', 45, 250, 'venus.gif'));
+        this.planets.push(new CelestialBody('Earth', 55, 350, 'slow-earth.gif'));
+        this.planets.push(new CelestialBody('Mars', 40, 450, 'marte.gif'));
+        this.planets.push(new CelestialBody('Jupiter', 100, 550, 'jupiter.gif'));
+        this.planets.push(new CelestialBody('Saturn', 220, 700, 'saturno.gif'));
+        this.planets.push(new CelestialBody('Uranus', 80, 850, 'urano.gif'));
+        this.planets.push(new CelestialBody('Neptune', 65, 1000, 'netuno.gif'));
+      }
+
+      generateStars(numStars) {
+        for (let i = 0; i < numStars; i++) {
+          const star = document.createElement('div');
+          star.classList.add('star');
+          star.style.left = `${Math.random() * window.innerWidth}px`;
+          star.style.top = `${Math.random() * window.innerHeight}px`;
+          this.space.appendChild(star);
+          this.stars.push(star);
+        }
+      }
+
+      animate() {
+        const animateFrame = () => {
+          this.planets.forEach((planet, i) => {
+            planet.updatePosition(this.centerX, this.centerY, 0.001 * (i + 1));
+          });
+          requestAnimationFrame(animateFrame);
+        };
+        animateFrame();
+      }
+    }
+
+    new Universe();
+  </script>
+</body>
+</html>

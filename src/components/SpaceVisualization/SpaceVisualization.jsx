@@ -1,8 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { generateAIResponse } from '../../services/aiServices';
 import './SpaceVisualization.css';
-import sunTexture from '../../images/earth.jpg';
+
+// Import textures
+import sunTexture from '../../images/sun.jpg';
 import mercuryTexture from '../../images/mercury.jpg';
 import venusTexture from '../../images/venus.jpg';
 import earthTexture from '../../images/earth.jpg';
@@ -13,9 +16,14 @@ import saturnTexture from '../../images/saturn.jpg';
 import uranusTexture from '../../images/uranus.jpg';
 import neptuneTexture from '../../images/neptune.jpg';
 import starsTexture from '../../images/stars.jpg';
+
 const SpaceVisualization = () => {
     const mountRef = useRef(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [selectedPlanet, setSelectedPlanet] = useState(null);
+    const [planetInfo, setPlanetInfo] = useState('');
+    const [isLoadingInfo, setIsLoadingInfo] = useState(false);
+    const planetsRef = useRef({});
 
     // Planet textures
     const textures = {
@@ -24,8 +32,6 @@ const SpaceVisualization = () => {
         venus: venusTexture,
         earth: {
             map: earthTexture,
-            // normalMap: sunTexture,
-            // specularMap: sunTexture,
             clouds: earthClouds,
         },
         mars: marsTexture,
@@ -39,6 +45,58 @@ const SpaceVisualization = () => {
     useEffect(() => {
         let scene, camera, renderer, controls;
 
+        const handlePlanetClick = async (event) => {
+            event.preventDefault();
+
+            // Calculate mouse position
+            const mouse = new THREE.Vector2();
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+            // Raycasting
+            const raycaster = new THREE.Raycaster();
+            raycaster.setFromCamera(mouse, camera);
+
+            // Get all objects in the scene
+            const objects = [];
+            scene.traverse((object) => {
+                if (object instanceof THREE.Mesh) {
+                    objects.push(object);
+                }
+            });
+
+            // Check for intersections
+            const intersects = raycaster.intersectObjects(objects);
+
+            if (intersects.length > 0) {
+                // Find which planet was clicked
+                const clickedObject = intersects[0].object;
+                let planetName = '';
+
+                Object.entries(planetsRef.current).forEach(([name, planet]) => {
+                    if (planet === clickedObject || planet.children?.includes(clickedObject)) {
+                        planetName = name;
+                    }
+                });
+
+                if (planetName) {
+                    setSelectedPlanet(planetName);
+                    setIsLoadingInfo(true);
+
+                    try {
+                        const prompt = `Tell me about ${planetName} in our solar system. Include information about its size, composition, atmosphere, notable features, and interesting facts.`;
+                        const response = await generateAIResponse(prompt);
+                        setPlanetInfo(response);
+                    } catch (error) {
+                        console.error('Error getting planet information:', error);
+                        setPlanetInfo('Failed to load planet information.');
+                    } finally {
+                        setIsLoadingInfo(false);
+                    }
+                }
+            }
+        };
+
         const init = () => {
             // Scene setup
             scene = new THREE.Scene();
@@ -49,31 +107,30 @@ const SpaceVisualization = () => {
                 2000
             );
 
-            // Initialize renderer with correct settings
+            // Initialize renderer
             renderer = new THREE.WebGLRenderer({ antialias: true });
             renderer.setSize(window.innerWidth, window.innerHeight);
             renderer.setPixelRatio(window.devicePixelRatio);
             renderer.outputColorSpace = THREE.SRGBColorSpace;
             mountRef.current.appendChild(renderer.domElement);
 
-
             // Background
             const starfieldTexture = new THREE.TextureLoader().load(textures.stars);
             scene.background = starfieldTexture;
 
             // Lighting
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5); // Increased intensity
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
             scene.add(ambientLight);
 
-            const sunLight = new THREE.PointLight(0xffffff, 3); // Increased intensity
+            const sunLight = new THREE.PointLight(0xffffff, 3);
             sunLight.position.set(0, 0, 0);
             scene.add(sunLight);
 
-            // Add hemispheric light for better overall illumination
             const hemisphereLight = new THREE.HemisphereLight(0xffffff, 0x444444, 1);
             scene.add(hemisphereLight);
+
             // Create planets
-            const planets = {
+            planetsRef.current = {
                 sun: createPlanet(20, textures.sun, 0, true),
                 mercury: createPlanet(0.38, textures.mercury, 35),
                 venus: createPlanet(0.95, textures.venus, 50),
@@ -86,7 +143,7 @@ const SpaceVisualization = () => {
             };
 
             // Add planets to scene
-            Object.values(planets).forEach(planet => scene.add(planet));
+            Object.values(planetsRef.current).forEach(planet => scene.add(planet));
 
             // Create asteroid belt
             createAsteroidBelt();
@@ -110,7 +167,7 @@ const SpaceVisualization = () => {
                 requestAnimationFrame(animate);
 
                 // Rotate planets
-                Object.values(planets).forEach((planet, index) => {
+                Object.values(planetsRef.current).forEach((planet, index) => {
                     if (planet) {
                         planet.rotation.y += 0.001 * (1 / (index + 1));
 
@@ -130,12 +187,11 @@ const SpaceVisualization = () => {
 
             animate();
         };
-
         // Helper function to create a basic planet
         const createPlanet = (radius, textureUrl, orbitRadius, isSun = false) => {
             const geometry = new THREE.SphereGeometry(radius, 32, 32);
             const texture = new THREE.TextureLoader().load(textureUrl);
-            texture.colorSpace = THREE.SRGBColorSpace; // Add this line
+            texture.colorSpace = THREE.SRGBColorSpace;
 
             let material;
             if (isSun) {
@@ -159,6 +215,7 @@ const SpaceVisualization = () => {
             }
             return planet;
         };
+
         // Create detailed Earth with clouds
         const createEarth = () => {
             const earthGroup = new THREE.Group();
@@ -167,15 +224,10 @@ const SpaceVisualization = () => {
             // Earth sphere
             const earthGeometry = new THREE.SphereGeometry(1, 32, 32);
             const earthTexture = textureLoader.load(textures.earth.map);
-            const normalMap = textureLoader.load(textures.earth.normalMap);
-            const specularMap = textureLoader.load(textures.earth.specularMap);
-
             earthTexture.colorSpace = THREE.SRGBColorSpace;
 
             const earthMaterial = new THREE.MeshStandardMaterial({
                 map: earthTexture,
-                normalMap: normalMap,
-                roughnessMap: specularMap,
                 metalness: 0.1,
                 roughness: 0.7
             });
@@ -258,6 +310,12 @@ const SpaceVisualization = () => {
 
         init();
 
+        // Add click event listener
+        const handleClick = (event) => {
+            handlePlanetClick(event);
+        };
+        mountRef.current.addEventListener('click', handleClick);
+
         // Handle window resize
         const handleResize = () => {
             if (camera && renderer) {
@@ -271,8 +329,11 @@ const SpaceVisualization = () => {
 
         return () => {
             window.removeEventListener('resize', handleResize);
-            if (mountRef.current && renderer) {
-                mountRef.current.removeChild(renderer.domElement);
+            if (mountRef.current) {
+                mountRef.current.removeEventListener('click', handleClick);
+                if (renderer) {
+                    mountRef.current.removeChild(renderer.domElement);
+                }
             }
         };
     }, []);
@@ -286,6 +347,30 @@ const SpaceVisualization = () => {
                 </div>
             )}
             <div ref={mountRef} className="space-visualization" />
+
+            {/* Planet Information Panel */}
+            {selectedPlanet && (
+                <div className="planet-info-panel">
+                    <h3>{selectedPlanet.charAt(0).toUpperCase() + selectedPlanet.slice(1)}</h3>
+                    {isLoadingInfo ? (
+                        <div className="info-loader">Loading information...</div>
+                    ) : (
+                        <div className="planet-info-content">
+                            <p>{planetInfo}</p>
+                            <button
+                                className="close-button"
+                                onClick={() => {
+                                    setSelectedPlanet(null);
+                                    setPlanetInfo('');
+                                }}
+                            >
+                                Close
+                            </button>
+                        </div>
+                    )}
+                </div>
+            )}
+
             <div className="space-controls">
                 <h3>Solar System Explorer</h3>
                 <p>Controls:</p>
@@ -293,6 +378,7 @@ const SpaceVisualization = () => {
                     <li>Left Click + Drag to Rotate</li>
                     <li>Right Click + Drag to Pan</li>
                     <li>Scroll to Zoom</li>
+                    <li>Click on any planet for information</li>
                 </ul>
             </div>
         </div>

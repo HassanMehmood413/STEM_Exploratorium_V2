@@ -145,7 +145,7 @@ function App() {
             <Route path="/technology/space" element={<SpaceVisualization />} />
             <Route path="/technology/robotics" element={<RoboticsPage />} />
             <Route path="/technology/ai" element={<AIPage />} />
-            <Route path="/technology/vr" element={<VRPage />} />
+            <Route path="/technology/vr" element={<AIPage />} />
             <Route path="/mathematics" element={<MathematicsPage />} />
           </Routes>
         </main>
