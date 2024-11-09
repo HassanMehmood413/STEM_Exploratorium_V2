@@ -3,8 +3,6 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { generateAIResponse } from '../../services/aiServices';
 import './SpaceVisualization.css';
-
-// Import textures
 import sunTexture from '../../images/sun.jpg';
 import mercuryTexture from '../../images/mercury.jpg';
 import venusTexture from '../../images/venus.jpg';
